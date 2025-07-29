@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 import { getMessage } from '../i18n';
 
 type Language = 'zh' | 'ja';
