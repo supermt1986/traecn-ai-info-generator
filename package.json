@@ -7,7 +7,7 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "build": "npm run build:client && npm run build:server",
-    "build:client": "cd client && npm ci && npm run build",
+    "build:client": "cd client && npm ci --production=false && npm run build",
     "build:server": "tsc",
     "db:migrate": "wrangler d1 migrations apply ai-info-generator-db",
     "setup": "npm install && cd client && npm install"
@@ -24,5 +24,9 @@
   },
   "keywords": ["cloudflare", "workers", "ai", "management"],
   "author": "Traecn",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
 }

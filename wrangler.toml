@@ -13,6 +13,7 @@ ADMIN_PASSWORD = "passwd1234"
 
 [build]
 command = "npm run build"
+watch_dir = "src"
 
 [[rules]]
 type = "ESModule"
