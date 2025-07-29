@@ -121,3 +121,6 @@ ADMIN_USERNAME = "admin"
 ## 许可证
 
 MIT License
+
+---
+*最后更新: 2024年12月19日*
