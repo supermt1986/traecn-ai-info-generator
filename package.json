@@ -10,7 +10,8 @@
     "build:client": "cd client && npm ci --production=false && npm run build",
     "build:server": "tsc",
     "db:migrate": "wrangler d1 migrations apply ai-info-generator-db",
-    "setup": "npm install && cd client && npm install"
+    "setup": "npm install && cd client && npm install",
+    "pages:build": "npm run build"
   },
   "dependencies": {
     "hono": "^4.6.0",

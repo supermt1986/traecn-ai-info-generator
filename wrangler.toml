@@ -13,23 +13,6 @@ ADMIN_PASSWORD = "passwd1234"
 
 [build]
 command = "npm run build"
-watch_dir = "src"
-
-[[rules]]
-type = "ESModule"
-globs = ["**/*.js"]
-
-[[rules]]
-type = "Text"
-globs = ["**/*.json"]
-
-[[rules]]
-type = "Text"
-globs = ["**/*.html"]
-
-[[rules]]
-type = "Text"
-globs = ["**/*.css"]
 
 [assets]
 directory = "client/dist"
