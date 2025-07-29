@@ -1,0 +1,35 @@
+name = "traecn-ai-info-generator"
+main = "dist/index.js"
+compatibility_date = "2023-12-18"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ai-info-generator-db-2847"
+database_id = "c55fe53f-5171-4955-a207-1ba623b5c8df"
+
+[vars]
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "passwd1234"
+
+[build]
+command = "npm run build"
+
+[[rules]]
+type = "ESModule"
+globs = ["**/*.js"]
+
+[[rules]]
+type = "Text"
+globs = ["**/*.json"]
+
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+
+[[rules]]
+type = "Text"
+globs = ["**/*.css"]
+
+[assets]
+directory = "client/dist"
+binding = "ASSETS"
