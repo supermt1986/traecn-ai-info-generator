@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useLanguage } from '../contexts/LanguageContext'
 import { 
   Home, 
   Settings, 
@@ -8,7 +9,8 @@ import {
   TestTube2, 
   LogOut,
   Menu,
-  X
+  X,
+  Globe
 } from 'lucide-react'
 
 interface LayoutProps {
@@ -20,11 +22,13 @@ export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = React.useState(false)
 
+  const { t, language, setLanguage } = useLanguage();
+
   const navigation = [
-    { name: '仪表盘', href: '/', icon: Home },
-    { name: '平台管理', href: '/platforms', icon: Settings },
-    { name: 'Agent管理', href: '/agents', icon: Bot },
-    { name: '信息生成器', href: '/test', icon: TestTube2 },
+    { name: t('dashboard'), href: '/', icon: Home },
+    { name: t('platformManagement'), href: '/platforms', icon: Settings },
+    { name: t('agentManagement'), href: '/agents', icon: Bot },
+    { name: t('infoGenerator'), href: '/test', icon: TestTube2 },
   ]
 
   return (
@@ -41,7 +45,7 @@ export default function Layout({ children }: LayoutProps) {
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div className="flex items-center justify-between h-16 px-4 border-b">
-          <h1 className="text-xl font-bold text-gray-800">AI信息生成器</h1>
+          <h1 className="text-xl font-bold text-gray-800">{t('aiInfoGenerator')}</h1>
           <button
             className="lg:hidden"
             onClick={() => setSidebarOpen(false)}
@@ -90,13 +94,24 @@ export default function Layout({ children }: LayoutProps) {
                 </button>
               </div>
               
-              <div className="flex items-center">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <Globe className="h-5 w-5 text-gray-600" />
+                  <select
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value as 'zh' | 'ja')}
+                    className="text-sm border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                  >
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                  </select>
+                </div>
                 <button
                   onClick={() => logout()}
                   className="flex items-center text-gray-600 hover:text-gray-900"
                 >
                   <LogOut className="h-5 w-5 mr-1" />
-                  <span className="hidden sm:inline">退出登录</span>
+                  <span className="hidden sm:inline">{t('logout')}</span>
                 </button>
               </div>
             </div>

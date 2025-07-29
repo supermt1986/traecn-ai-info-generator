@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
+import { useLanguage } from '../contexts/LanguageContext'
 import { useNavigate } from 'react-router-dom'
 import { Lock, User } from 'lucide-react'
 
@@ -10,6 +11,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   
   const { login } = useAuth()
+  const { t } = useLanguage()
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,7 +23,7 @@ export default function LoginPage() {
     if (success) {
       navigate('/')
     } else {
-      setError('用户名或密码错误')
+      setError(t('invalidCredentials'))
     }
     
     setLoading(false)
@@ -32,10 +34,10 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            AI信息生成器
+            {t('aiInfoGenerator')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            请登录以继续
+            {t('loginPrompt')}
           </p>
         </div>
         
@@ -49,7 +51,7 @@ export default function LoginPage() {
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="username" className="sr-only">
-                用户名
+                {t('username')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -61,7 +63,7 @@ export default function LoginPage() {
                   type="text"
                   required
                   className="appearance-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
-                  placeholder="用户名"
+                  placeholder={t('username')}
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
@@ -70,7 +72,7 @@ export default function LoginPage() {
             
             <div>
               <label htmlFor="password" className="sr-only">
-                密码
+                {t('password')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -82,7 +84,7 @@ export default function LoginPage() {
                   type="password"
                   required
                   className="appearance-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
-                  placeholder="密码"
+                  placeholder={t('password')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -96,7 +98,7 @@ export default function LoginPage() {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
             >
-              {loading ? '登录中...' : '登录'}
+              {loading ? t('loggingIn') : t('login')}
             </button>
           </div>
         </form>
@@ -107,7 +109,7 @@ export default function LoginPage() {
             onClick={() => navigate('/register')}
             className="text-sm text-primary-600 hover:text-primary-500"
           >
-            没有账号？立即注册
+            {t('noAccountRegister')}
           </button>
         </div>
       </div>
