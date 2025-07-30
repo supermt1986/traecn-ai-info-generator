@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Settings, Bot, TestTube2 } from 'lucide-react'
+import { useTranslation } from '../i18n'
 
 interface Stats {
   platforms: number
@@ -11,6 +12,7 @@ interface Stats {
 export default function Dashboard() {
   const [stats, setStats] = useState<Stats>({ platforms: 0, agents: 0 })
   const [loading, setLoading] = useState(true)
+  const { t } = useTranslation()
 
   useEffect(() => {
     fetchStats()
@@ -41,24 +43,24 @@ export default function Dashboard() {
 
   const cards = [
     {
-      title: '平台管理',
-      description: '管理AI平台账号和API配置',
+      title: t('platformManagement'),
+      description: t('platformManagementDesc'),
       count: stats.platforms,
       icon: Settings,
       href: '/platforms',
       color: 'bg-blue-500'
     },
     {
-      title: 'Agent管理',
-      description: '配置和管理AI Agent',
+      title: t('agentManagement'),
+      description: t('agentManagementDesc'),
       count: stats.agents,
       icon: Bot,
       href: '/agents',
       color: 'bg-green-500'
     },
     {
-      title: '信息生成器',
-      description: '测试API连接和生成效果',
+      title: t('infoGenerator'),
+      description: t('infoGeneratorDesc'),
       icon: TestTube2,
       href: '/test',
       color: 'bg-purple-500'

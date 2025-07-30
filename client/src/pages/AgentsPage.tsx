@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Plus, Edit, Trash2 } from 'lucide-react'
+import { useTranslation } from '../i18n'
 
 interface Agent {
   id: number
@@ -17,6 +18,7 @@ export default function AgentsPage() {
     envVars: ''
   })
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation()
 
   useEffect(() => {
     fetchAgents()
@@ -30,7 +32,7 @@ export default function AgentsPage() {
       })
       setAgents(response.data)
     } catch (error) {
-      console.error('获取Agent列表失败:', error)
+      console.error(t('fetchAgentsFailed'), error)
     } finally {
       setLoading(false)
     }
@@ -49,7 +51,7 @@ export default function AgentsPage() {
           throw new Error('环境变量必须是JSON对象格式')
         }
       } catch (jsonError) {
-        alert(jsonError instanceof Error ? jsonError.message : '环境变量格式错误，请检查JSON格式')
+        alert(jsonError instanceof Error ? jsonError.message : t('envVarFormatError'))
         return
       }
 
@@ -69,14 +71,14 @@ export default function AgentsPage() {
       setFormData({ name: '', envVars: '' })
       fetchAgents()
     } catch (error: any) {
-      console.error('保存Agent失败:', error)
-      const errorMessage = error.response?.data?.error || '保存失败，请重试'
+      console.error(t('saveAgentFailed'), error)
+      const errorMessage = error.response?.data?.error || t('saveFailed')
       alert(errorMessage)
     }
   }
 
   const handleDelete = async (id: number) => {
-    if (!confirm('确定要删除这个Agent吗？')) return
+    if (!confirm(t('confirmDeleteAgent'))) return
     
     try {
       const sessionId = localStorage.getItem('sessionId')
@@ -85,7 +87,7 @@ export default function AgentsPage() {
       })
       fetchAgents()
     } catch (error) {
-      console.error('删除Agent失败:', error)
+      console.error(t('deleteAgentFailed'), error)
     }
   }
 
@@ -114,13 +116,13 @@ export default function AgentsPage() {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Agent管理</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{t('agentManagement')}</h1>
         <button
           onClick={openCreateModal}
           className="btn-primary flex items-center"
         >
           <Plus className="h-4 w-4 mr-2" />
-          添加Agent
+          {t('addAgent')}
         </button>
       </div>
 
@@ -132,7 +134,7 @@ export default function AgentsPage() {
         <div className="bg-white shadow overflow-hidden sm:rounded-md">
           {agents.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-500">暂无Agent数据</p>
+              <p className="text-gray-500">{t('noAgents')}</p>
             </div>
           ) : (
             <ul className="divide-y divide-gray-200">
@@ -142,7 +144,7 @@ export default function AgentsPage() {
                     <div className="flex-1">
                       <h3 className="text-lg font-medium text-gray-900">{agent.name}</h3>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">环境变量:</p>
+                        <p className="text-sm text-gray-500">{t('environmentVariables')}:</p>
                         <pre className="mt-1 text-xs bg-gray-50 p-2 rounded overflow-x-auto">
                           {JSON.stringify(agent.env_vars, null, 2)}
                         </pre>
@@ -175,13 +177,13 @@ export default function AgentsPage() {
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
           <div className="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
             <h3 className="text-lg font-medium text-gray-900 mb-4">
-              {editingAgent ? '编辑Agent' : '添加Agent'}
+              {editingAgent ? t('editAgent') : t('addAgent')}
             </h3>
             
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Agent名称</label>
+                  <label className="block text-sm font-medium text-gray-700">{t('agentName')}</label>
                   <input
                     type="text"
                     required
@@ -193,9 +195,9 @@ export default function AgentsPage() {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    环境变量 (JSON格式)
+                    {t('environmentVariables')} (JSON{t('format')})
                     <span className="text-xs text-gray-500 ml-2">
-                      支持占位符: $BASE_URL, $API_KEY, $MODEL
+                      {t('supportedPlaceholders')}: $BASE_URL, $API_KEY, $MODEL
                     </span>
                   </label>
                   <textarea

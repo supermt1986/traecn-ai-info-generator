@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useTranslation } from '../i18n'
 import { useNavigate } from 'react-router-dom'
 import { Lock, User } from 'lucide-react'
 
@@ -12,7 +12,7 @@ export default function RegisterPage() {
   const [error, setError] = useState('')
   
   const { login } = useAuth()
-  const { t } = useLanguage()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {

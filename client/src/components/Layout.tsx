@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useTranslation } from '../i18n'
 import { 
   Home, 
   Settings, 
@@ -22,7 +22,7 @@ export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = React.useState(false)
 
-  const { t, language, setLanguage } = useLanguage();
+  const { t, language, setLanguage } = useTranslation();
 
   const navigation = [
     { name: t('dashboard'), href: '/', icon: Home },

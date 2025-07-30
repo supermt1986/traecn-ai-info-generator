@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useTranslation } from '../i18n'
 import { useNavigate } from 'react-router-dom'
 import { Lock, User } from 'lucide-react'
 
@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   
   const { login } = useAuth()
-  const { t } = useLanguage()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,7 +34,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {t('aiInfoGenerator')}
+            {t('infoGenerator')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             {t('loginPrompt')}

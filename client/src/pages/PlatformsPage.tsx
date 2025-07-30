@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Plus, Edit, Trash2 } from 'lucide-react'
+import { useTranslation } from '../i18n'
 
 interface Platform {
   id: number
@@ -12,6 +13,7 @@ interface Platform {
 }
 
 export default function PlatformsPage() {
+  const { t } = useTranslation()
   const [platforms, setPlatforms] = useState<Platform[]>([])
   const [showModal, setShowModal] = useState(false)
   const [editingPlatform, setEditingPlatform] = useState<Platform | null>(null)
@@ -38,7 +40,7 @@ export default function PlatformsPage() {
       })
       setPlatforms(response.data)
     } catch (error) {
-      console.error('获取平台列表失败:', error)
+      console.error(t('fetchPlatformsFailed'), error)
     } finally {
       setLoading(false)
     }
@@ -77,7 +79,7 @@ export default function PlatformsPage() {
   }
 
   const handleDelete = async (id: number) => {
-    if (!confirm('确定要删除这个平台吗？')) return
+    if (!confirm(t('confirmDeletePlatform'))) return
     
     try {
       const sessionId = localStorage.getItem('sessionId')
@@ -86,7 +88,7 @@ export default function PlatformsPage() {
       })
       fetchPlatforms()
     } catch (error) {
-      console.error('删除平台失败:', error)
+      console.error(t('deletePlatformFailed'), error)
     }
   }
 
@@ -217,13 +219,13 @@ export default function PlatformsPage() {
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
           <div className="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
             <h3 className="text-lg font-medium text-gray-900 mb-4">
-              {editingPlatform ? '编辑平台' : '添加平台'}
-            </h3>
+                {editingPlatform ? t('editPlatform') : t('addPlatform')}
+              </h3>
             
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">平台名称</label>
+                  <label className="block text-sm font-medium text-gray-700">{t('platformName')}</label>
                   <input
                     type="text"
                     required
@@ -234,7 +236,7 @@ export default function PlatformsPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">API Base URL</label>
+                  <label className="block text-sm font-medium text-gray-700">{t('apiUrl')}</label>
                   <input
                     type="url"
                     required
@@ -245,7 +247,7 @@ export default function PlatformsPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">API Key</label>
+                  <label className="block text-sm font-medium text-gray-700">{t('apiKey')}</label>
                   <input
                     type="password"
                     required
@@ -256,7 +258,7 @@ export default function PlatformsPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">模型列表（逗号分隔）</label>
+                  <label className="block text-sm font-medium text-gray-700">{t('modelList')}</label>
                   <input
                     type="text"
                     required
@@ -268,7 +270,7 @@ export default function PlatformsPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">管理画面URL</label>
+                  <label className="block text-sm font-medium text-gray-700">{t('adminUrl')}</label>
                   <input
                     type="url"
                     className="input-field"
@@ -288,7 +290,7 @@ export default function PlatformsPage() {
                   取消
                 </button>
                 <button type="submit" className="btn-primary">
-                  {editingPlatform ? '更新' : '创建'}
+                  {editingPlatform ? t('update') : t('create')}
                 </button>
               </div>
             </form>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useTranslation } from '../i18n'
 
 interface Platform {
   id: number
@@ -17,6 +18,7 @@ interface Agent {
 }
 
 export default function TestPage() {
+  const { t } = useTranslation()
   const [platforms, setPlatforms] = useState<Platform[]>([])
   const [agents, setAgents] = useState<Agent[]>([])
   const [selectedPlatform, setSelectedPlatform] = useState<number | null>(null)
@@ -47,7 +49,7 @@ export default function TestPage() {
     try {
       const sessionId = localStorage.getItem('sessionId')
       if (!sessionId) {
-        setError('请先登录')
+        setError(t('pleaseLogin'))
         return
       }
 
@@ -64,7 +66,7 @@ export default function TestPage() {
       setAgents(agentsRes.data)
     } catch (error: any) {
       console.error('获取数据失败:', error)
-      setError(error.response?.data?.error || '获取数据失败')
+      setError(error.response?.data?.error || t('fetchDataFailed'))
     }
   }
 
@@ -92,7 +94,7 @@ export default function TestPage() {
       setTestCommand(response.data.command)
     } catch (error: any) {
       console.error('生成测试命令失败:', error)
-      setError(error.response?.data?.error || '生成测试命令失败')
+      setError(error.response?.data?.error || t('generateTestCommandFailed'))
     }
   }
 
@@ -119,7 +121,7 @@ export default function TestPage() {
       setResolvedVars(response.data.resolvedVars)
     } catch (error: any) {
       console.error('解析Agent变量失败:', error)
-      setError(error.response?.data?.error || '解析Agent变量失败')
+      setError(error.response?.data?.error || t('resolveAgentVarsFailed'))
     }
   }
 
@@ -147,8 +149,8 @@ export default function TestPage() {
       setTestResult(response.data)
     } catch (error: any) {
       console.error('测试失败:', error)
-      setError(error.response?.data?.error || '测试失败')
-      setTestResult({ success: false, error: error.response?.data?.error || '测试失败' })
+      setError(error.response?.data?.error || t('testFailed'))
+      setTestResult({ success: false, error: error.response?.data?.error || t('testFailed') })
     } finally {
       setLoading(false)
     }
@@ -157,10 +159,10 @@ export default function TestPage() {
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
-      alert('已复制到剪贴板')
+      alert(t('copiedToClipboard'))
     } catch (error) {
       console.error('复制失败:', error)
-      alert('复制失败，请手动复制')
+      alert(t('copyFailedManual'))
     }
   }
 
@@ -169,16 +171,16 @@ export default function TestPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">信息生成器</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('infoGenerator')}</h1>
       
       <div className="space-y-6">
         {/* 选择区域 */}
         <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">配置选择</h2>
+          <h2 className="text-lg font-medium text-gray-900 mb-4">{t('configurationSelection')}</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">平台</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('platform')}</label>
               <select
                 className="input-field"
                 value={selectedPlatform || ''}
@@ -187,7 +189,7 @@ export default function TestPage() {
                   setSelectedModel('')
                 }}
               >
-                <option value="">请选择平台</option>
+                <option value="">{t('selectPlatform')}</option>
                 {platforms.map(platform => (
                   <option key={platform.id} value={platform.id}>
                     {platform.name}
@@ -197,14 +199,14 @@ export default function TestPage() {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">模型</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('model')}</label>
               <select
                 className="input-field"
                 value={selectedModel}
                 onChange={(e) => setSelectedModel(e.target.value)}
                 disabled={!selectedPlatform}
               >
-                <option value="">请选择模型</option>
+                <option value="">{t('selectModel')}</option>
                 {models.map(model => (
                   <option key={model.trim()} value={model.trim()}>
                     {model.trim()}
@@ -214,13 +216,13 @@ export default function TestPage() {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Agent</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('agent')}</label>
               <select
                 className="input-field"
                 value={selectedAgent || ''}
                 onChange={(e) => setSelectedAgent(Number(e.target.value))}
               >
-                <option value="">请选择Agent</option>
+                <option value="">{t('selectAgent')}</option>
                 {agents.map(agent => (
                   <option key={agent.id} value={agent.id}>
                     {agent.name}
@@ -248,11 +250,11 @@ export default function TestPage() {
         {/* 平台详细信息 */}
         {selectedPlatformData && (
           <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-lg font-medium text-gray-900 mb-4">平台信息</h2>
+            <h2 className="text-lg font-medium text-gray-900 mb-4">{t('platformInfo')}</h2>
             <div className="space-y-4">
               {selectedPlatformData.admin_url && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">管理画面</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('adminPanel')}</label>
                   <div className="flex items-center space-x-2">
                     <a 
                       href={selectedPlatformData.admin_url} 
@@ -263,11 +265,11 @@ export default function TestPage() {
                       {selectedPlatformData.admin_url}
                     </a>
                     <button
-                      onClick={() => copyToClipboard(selectedPlatformData.admin_url)}
-                      className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
-                    >
-                      复制
-                    </button>
+                    onClick={() => copyToClipboard(selectedPlatformData.admin_url)}
+                    className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
+                  >
+                    {t('copy')}
+                  </button>
                   </div>
                 </div>
               )}
@@ -280,7 +282,7 @@ export default function TestPage() {
                     onClick={() => copyToClipboard(selectedPlatformData.api_base_url)}
                     className="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded text-gray-700"
                   >
-                    复制
+                    {t('copy')}
                   </button>
                 </div>
               </div>
@@ -293,7 +295,7 @@ export default function TestPage() {
                     onClick={() => copyToClipboard(selectedPlatformData.api_key)}
                     className="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded text-gray-700"
                   >
-                    复制
+                    {t('copy')}
                   </button>
                 </div>
               </div>
@@ -304,7 +306,7 @@ export default function TestPage() {
         {/* API测试命令 */}
         {testCommand && (
           <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-lg font-medium text-gray-900 mb-4">API测试命令</h2>
+            <h2 className="text-lg font-medium text-gray-900 mb-4">{t('apiTestCommand')}</h2>
             <pre className="bg-gray-50 p-4 rounded overflow-x-auto text-sm">
               {testCommand}
             </pre>
@@ -313,13 +315,13 @@ export default function TestPage() {
               disabled={loading}
               className="btn-primary mt-4"
             >
-              {loading ? '测试中...' : '执行测试'}
+              {loading ? t('testing') : t('executeTest')}
             </button>
             
             {/* 测试结果 - 显示在命令下方 */}
             {testResult && (
               <div className="mt-4">
-                <h3 className="text-md font-medium text-gray-900 mb-2">测试结果</h3>
+                <h3 className="text-md font-medium text-gray-900 mb-2">{t('testResults')}</h3>
                 <div className={`p-4 rounded ${
                   testResult.success ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
                 }`}>
@@ -338,7 +340,7 @@ export default function TestPage() {
         {/* Agent环境变量 */}
         {selectedAgent && Object.keys(resolvedVars).length > 0 && (
           <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-lg font-medium text-gray-900 mb-4">Agent环境变量</h2>
+            <h2 className="text-lg font-medium text-gray-900 mb-4">{t('agentEnvironmentVariables')}</h2>
             <pre className="bg-gray-50 p-4 rounded overflow-x-auto text-sm">
               {Object.entries(resolvedVars).map(([key, value]) => 
                 `export ${key}="${value}"`

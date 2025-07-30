@@ -1,30 +1,23 @@
-export interface I18nMessages {
-  [key: string]: string;
-}
-
-export interface I18nConfig {
-  [lang: string]: I18nMessages;
-}
-
-export const messages: I18nConfig = {
+const messages = {
   zh: {
-    dashboard: '仪表盘',
+    // 通用
+    dashboard: '仪表板',
     platformManagement: '平台管理',
     agentManagement: 'Agent管理',
     infoGenerator: '信息生成器',
     logout: '退出登录',
     login: '登录',
     loggingIn: '登录中...',
-    loginPrompt: '请登录以继续',
+    loginPrompt: '请登录后继续',
     invalidCredentials: '用户名或密码错误',
     noAccountRegister: '没有账号？立即注册',
     register: '注册',
     registering: '注册中...',
     registerPrompt: '创建新账号',
     alreadyHaveAccount: '已有账号？立即登录',
-    allFieldsRequired: '所有字段均为必填',
+    allFieldsRequired: '所有字段均为必填项',
     passwordsDoNotMatch: '两次输入的密码不一致',
-    passwordTooShort: '密码长度至少为6位',
+    passwordTooShort: '密码长度至少6位',
     registerSuccessLoginFailed: '注册成功但登录失败，请手动登录',
     registerFailed: '注册失败',
     networkError: '网络错误，请稍后重试',
@@ -32,8 +25,15 @@ export const messages: I18nConfig = {
     home: '首页',
     settings: '设置',
     profile: '个人资料',
+    username: '用户名',
+    password: '密码',
     description: '管理多个AI平台，测试API连接，生成信息内容',
-    noPlatforms: '暂无平台',
+    platformManagementDesc: '管理AI平台账号和API配置',
+    agentManagementDesc: 'AI Agent的配置和管理',
+    infoGeneratorDesc: '测试API连接和生成效果',
+
+    // 平台相关
+    noPlatforms: '暂无平台数据',
     addPlatform: '添加平台',
     editPlatform: '编辑平台',
     deletePlatform: '删除平台',
@@ -41,6 +41,57 @@ export const messages: I18nConfig = {
     apiUrl: 'API地址',
     apiKey: 'API密钥',
     model: '模型',
+    adminUrl: '管理地址',
+    platformList: '平台列表',
+    fetchPlatformsFailed: '获取平台列表失败',
+    confirmDeletePlatform: '确定要删除这个平台吗？',
+    deletePlatformSuccess: '平台删除成功',
+    deletePlatformFailed: '平台删除失败',
+    modelList: '模型列表（逗号分隔）',
+    optional: '可选',
+
+    // Agent相关
+    addAgent: '添加Agent',
+    agentName: 'Agent名称',
+    noAgents: '暂无Agent数据',
+    fetchAgentsFailed: '获取Agent列表失败',
+    confirmDeleteAgent: '确定要删除这个Agent吗？',
+    deleteAgentFailed: '删除Agent失败',
+    saveAgentFailed: '保存Agent失败',
+    saveFailed: '保存失败，请重试',
+    envVarFormatError: '环境变量格式错误，请检查JSON格式',
+    environmentVariables: '环境变量',
+    format: '格式',
+    supportedPlaceholders: '支持占位符',
+    editAgent: '编辑Agent',
+
+    // 信息生成器
+    configurationSelection: '配置选择',
+    agent: 'Agent',
+    testContent: '测试内容',
+    selectPlatform: '请选择平台',
+    selectModel: '请选择模型',
+    selectAgent: '请选择Agent',
+    startTesting: '开始测试',
+    platformInfo: '平台信息',
+    adminPanel: '管理面板',
+    apiTestCommand: 'API测试命令',
+    executeTest: '执行测试',
+    testResults: '测试结果',
+    requestInfo: '请求信息',
+    responseInfo: '响应信息',
+    agentEnvironmentVariables: 'Agent环境变量',
+    pleaseLogin: '请先登录',
+    fetchDataFailed: '获取数据失败',
+    generateTestCommandFailed: '生成测试命令失败',
+    resolveAgentVarsFailed: '解析Agent变量失败',
+    testFailed: '测试失败',
+    copiedToClipboard: '已复制到剪贴板',
+    copyFailed: '复制失败',
+    copyFailedManual: '复制失败，请手动复制',
+    testing: '测试中...',
+
+    // 通用操作
     save: '保存',
     cancel: '取消',
     delete: '删除',
@@ -56,7 +107,7 @@ export const messages: I18nConfig = {
     success: '成功',
     confirm: '确认',
     confirmDelete: '确认删除',
-    deleteConfirmMessage: '确定要删除这个平台吗？此操作不可撤销。',
+    deleteConfirmMessage: '确定要删除吗？此操作不可撤销。',
     back: '返回',
     next: '下一步',
     previous: '上一步',
@@ -79,7 +130,6 @@ export const messages: I18nConfig = {
     download: '下载',
     import: '导入',
     export: '导出',
-    copy: '复制',
     paste: '粘贴',
     cut: '剪切',
     undo: '撤销',
@@ -93,6 +143,7 @@ export const messages: I18nConfig = {
     confirmPassword: '确认密码'
   },
   ja: {
+    // 通用
     dashboard: 'ダッシュボード',
     platformManagement: 'プラットフォーム管理',
     agentManagement: 'エージェント管理',
@@ -100,7 +151,7 @@ export const messages: I18nConfig = {
     logout: 'ログアウト',
     login: 'ログイン',
     loggingIn: 'ログイン中...',
-    loginPrompt: '続行するにはログインしてください',
+    loginPrompt: 'ログインして続行',
     invalidCredentials: 'ユーザー名またはパスワードが間違っています',
     noAccountRegister: 'アカウントをお持ちでない方？今すぐ登録',
     register: '登録',
@@ -117,7 +168,14 @@ export const messages: I18nConfig = {
     home: 'ホーム',
     settings: '設定',
     profile: 'プロフィール',
+    username: 'ユーザー名',
+    password: 'パスワード',
     description: '複数のAIプラットフォームを管理し、API接続をテストし、情報コンテンツを生成します',
+    platformManagementDesc: 'AIプラットフォームアカウントとAPI設定を管理',
+    agentManagementDesc: 'AIエージェントの設定と管理',
+    infoGeneratorDesc: 'API接続と生成効果をテスト',
+
+    // 平台相关
     noPlatforms: 'プラットフォームなし',
     addPlatform: 'プラットフォーム追加',
     editPlatform: 'プラットフォーム編集',
@@ -126,6 +184,57 @@ export const messages: I18nConfig = {
     apiUrl: 'API URL',
     apiKey: 'APIキー',
     model: 'モデル',
+    adminUrl: '管理画面URL',
+    platformList: 'プラットフォームリスト',
+    fetchPlatformsFailed: 'プラットフォームリストの取得に失敗しました',
+    confirmDeletePlatform: 'このプラットフォームを削除してもよろしいですか？',
+    deletePlatformSuccess: 'プラットフォームを削除しました',
+    deletePlatformFailed: 'プラットフォームの削除に失敗しました',
+    modelList: 'モデルリスト（カンマ区切り）',
+    optional: 'オプション',
+
+    // Agent相关
+    addAgent: 'Agentを追加',
+    agentName: 'Agent名',
+    noAgents: 'Agentデータがありません',
+    fetchAgentsFailed: 'Agentリストの取得に失敗しました',
+    confirmDeleteAgent: 'このAgentを削除してもよろしいですか？',
+    deleteAgentFailed: 'Agentの削除に失敗しました',
+    saveAgentFailed: 'Agentの保存に失敗しました',
+    saveFailed: '保存に失敗しました。もう一度お試しください',
+    envVarFormatError: '環境変数の形式が正しくありません。JSON形式を確認してください',
+    environmentVariables: '環境変数',
+    format: '形式',
+    supportedPlaceholders: 'サポートされているプレースホルダー',
+    editAgent: 'Agentを編集',
+
+    // 信息生成器
+    configurationSelection: '設定選択',
+    agent: 'エージェント',
+    testContent: 'テストコンテンツ',
+    selectPlatform: 'プラットフォームを選択してください',
+    selectModel: 'モデルを選択してください',
+    selectAgent: 'エージェントを選択してください',
+    startTesting: 'テストを開始',
+    platformInfo: 'プラットフォーム情報',
+    adminPanel: '管理画面',
+    apiTestCommand: 'APIテストコマンド',
+    executeTest: 'テストを実行',
+    testResults: 'テスト結果',
+    requestInfo: 'リクエスト情報',
+    responseInfo: 'レスポンス情報',
+    agentEnvironmentVariables: 'エージェント環境変数',
+    pleaseLogin: 'ログインしてください',
+    fetchDataFailed: 'データの取得に失敗しました',
+    generateTestCommandFailed: 'テストコマンドの生成に失敗しました',
+    resolveAgentVarsFailed: 'エージェント変数の解析に失敗しました',
+    testFailed: 'テストに失敗しました',
+    copiedToClipboard: 'クリップボードにコピーしました',
+    copyFailed: 'コピーに失敗しました',
+    copyFailedManual: 'コピーに失敗しました。手動でコピーしてください',
+    testing: 'テスト中...',
+
+    // 通用操作
     save: '保存',
     cancel: 'キャンセル',
     delete: '削除',
@@ -180,5 +289,30 @@ export const messages: I18nConfig = {
 };
 
 export const getMessage = (key: string, lang: string = 'zh'): string => {
-  return messages[lang]?.[key] || messages.zh[key] || key;
+  const langMessages = messages[lang as keyof typeof messages];
+  const zhMessages = messages.zh;
+  return langMessages?.[key as keyof typeof zhMessages] || 
+         zhMessages[key as keyof typeof zhMessages] || 
+         key;
 };
+
+// React hook for easy translation
+export const useTranslation = () => {
+  const [language, setLanguage] = React.useState<string>('zh');
+  
+  React.useEffect(() => {
+    const saved = localStorage.getItem('language');
+    if (saved) {
+      setLanguage(saved);
+    }
+  }, []);
+
+  const t = (key: string) => {
+    return getMessage(key, language);
+  };
+
+  return { t, language, setLanguage };
+};
+
+// Add React import
+import React from 'react';
