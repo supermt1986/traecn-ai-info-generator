@@ -59,10 +59,9 @@ function generateTestCommand(apiBaseUrl: string, apiKey: string, model: string) 
     "messages": [
       {
         "role": "user",
-        "content": "Hello, how are you?"
+        "content": "你好，请介绍一下你自己"
       }
-    ],
-    "max_tokens": 50
+    ]
   }'`
 }
 
@@ -126,7 +125,7 @@ tests.post('/execute', async (c) => {
         messages: [
           {
             role: 'user',
-            content: 'Hello, how are you?'
+            content: '你好，请介绍一下你自己'
           }
         ],
         max_tokens: 50
