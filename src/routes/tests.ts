@@ -127,8 +127,7 @@ tests.post('/execute', async (c) => {
             role: 'user',
             content: '你好，请介绍一下你自己'
           }
-        ],
-        max_tokens: 50
+        ]
       })
     })
     
